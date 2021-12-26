@@ -1,0 +1,36 @@
+//------------------------------------------------
+//--- 010 Editor v11.0 Binary Template
+//
+//      File: ztb.bt
+//   Authors: Steven Tyler Sean Herr (with some help from m-1, antidote and yonder)
+//   Version: 0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.001
+//   Purpose: parses zelda phantom hourglass and spirit tracks .ztb files
+//  Category: game
+// File Mask: *.ztb
+//  ID Bytes: 42 52 54 4D
+//   History: it all started when i was born...
+//------------------------------------------------
+local int pos = 0;
+LittleEndian();
+
+struct Header{
+    int32 stamp;
+    int32 unk1;
+    int32 filesize;
+    int32 unk2;
+    int32 unk3[4]; //seems to be unused as they just repeat 04 03 02 01
+};
+
+struct Section{
+    pos = FTell();
+    int32 stamp;
+    int32 sectionsize;
+    FSeek(pos);
+    byte data[sectionsize];
+};
+
+Header header;
+Section BDRG;
+Section LRRG;
+Section BATS;
+Section KMDL;
